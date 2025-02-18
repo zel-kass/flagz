@@ -9,14 +9,22 @@ import {
 } from "@/components/ui/dialog"
 
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b">
       <nav className="flex items-center justify-between p-4">
         <div className='flex flex-row items-center space-x-2'>
-            <Link href="/" className='h-6 w-8 rounded-sm bg-orange-500' />
-            <h1>Flagz</h1>
+          <Link href="/" >
+            <Image
+              src='/assets/fr.svg'
+              alt='fr flag'
+              width={50}
+              height={50}
+            />
+          </Link>
+          <h1>Flagz</h1>
         </div>
         <Dialog>
           <DialogTrigger asChild>
