@@ -20,7 +20,7 @@ export default function QuizzView() {
       setScore(quizz.getScore());
       quizz.newLevel();
     } else {
-      alert("T'as perdu gros cake!");
+      console.log("T'as perdu gros cake!");
     }
   }
 
