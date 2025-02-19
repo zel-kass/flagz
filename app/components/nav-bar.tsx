@@ -41,5 +41,5 @@ export default function NavBar() {
         </Dialog>
       </nav>
     </header>
-  )
+  );
 }

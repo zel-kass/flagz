@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Ledger } from "next/font/google";
+import { Funnel_Display } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/app/components/nav-bar";
 
-const ledger = Ledger({
+const funnel = Funnel_Display({
   weight:'400',
   subsets: ['latin'],
   display: 'swap'
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className={`${ledger.className} flex flex-col h-screen`}>
+        <div className={`${funnel.className} flex flex-col h-screen`}>
           <NavBar />
           {children}
         </div>
