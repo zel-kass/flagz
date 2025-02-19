@@ -11,7 +11,7 @@ export default function Home() {
           <p>How much can you score ?</p>
         </div>
         <Link href="/game/quizz">
-          <Button size="lg">Play</Button>
+          <Button variant="default" size="lg">Play</Button>
         </Link>
       </div>
     </div>
