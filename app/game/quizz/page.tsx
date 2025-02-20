@@ -19,25 +19,28 @@ export default function QuizzView() {
       quizz.upScore();
       setScore(quizz.getScore());
       quizz.newLevel();
-    } else {
-      console.log("T'as perdu gros cake!");
     }
   }
 
   if (!quizz) return;
 
   return (
-    <div className="flex items-center justify-center flex-col gap-y-2">
+    <div className="flex items-center justify-center flex-col gap-y-2 text-white h-full">
       <h2>Score: {score}</h2>
       <Image
         src={`/assets/${quizz.getActualFlag()}.svg`}
         alt="current flag"
         width={100}
-        height={100}
+        height={50}
+        style={{
+          width: "30%",
+          height: "auto",
+        }}
+        priority={true}
       />
       <div className="grid grid-cols-2 grid-rows-2 gap-2">
         {Array.from(quizz.getSolutions()).map(([key, value]) => (
-          <Button onClick={() => handleSubmit(key)} key={key} className="w-full">
+          <Button size="xl" onClick={() => handleSubmit(key)} key={key} className="w-full">
               {value}
             </Button>
           ))}

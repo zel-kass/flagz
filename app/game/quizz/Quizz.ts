@@ -16,11 +16,11 @@ export default class Quizz {
     private _score: number;
     private _actual_flag: string = "";
     private _solutions: Map<string, string>;
-    private _seen_flags: string[];
+    private _seen_flags: Set<string>;
 
     constructor() {
         this._score = 0;
-        this._seen_flags = [];
+        this._seen_flags = new Set<string>();
         this._solutions = new Map();
         this.newLevel();
         window.addEventListener('keydown', (event) => {
@@ -36,15 +36,14 @@ export default class Quizz {
     public newLevel() {
         if (this._score >= Object.keys(flagMap).length) 
             return ;
-        this._seen_flags.push(this._actual_flag);
-        this._solutions.clear();
-        let found: string | undefined = 'xy';
-        while (found != undefined) {
+        this._actual_flag = "xy";
+        while (this._actual_flag == "xy" || this._seen_flags.has(this._actual_flag)) {
             const key = this._createRandomKey();
             this._actual_flag = this._typedKeyMap[key.toString()];
-            found = this._seen_flags.find((element) => element == this._actual_flag);
         }
+        this._solutions.clear();
         this._setSolutions();
+        this._seen_flags.add(this._actual_flag);
     }
 
     private _setSolutions() {
@@ -54,7 +53,7 @@ export default class Quizz {
                 this._solutions.set(this._actual_flag, this._typedFlagMap[this._actual_flag]);
             else {
                 let key: string = "xy";
-                while (key == "xy" || this._solutions.has(key))
+                while (key == "xy" || key == this._actual_flag || this._solutions.has(key))
                     key = this._typedKeyMap[this._createRandomKey().toString()];
                 this._solutions.set(key, this._typedFlagMap[key]);
             }

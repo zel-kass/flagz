@@ -20,11 +20,16 @@ export default function NavBar() {
             <Image
               src='/assets/fr.svg'
               alt='fr flag'
-              width={50}
-              height={50}
+              width={10}
+              height={10}
+              style={{
+                width: "5vw",
+                height: "auto",
+              }}
+              priority={true}
             />
           </Link>
-          <h1>Flagz</h1>
+          <h1 className='text-white'>Flagz</h1>
         </div>
         <Dialog>
           <DialogTrigger asChild>
