@@ -10,11 +10,23 @@ import Link from 'next/link';
 export default function QuizzView() {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [timer, setTimer] = useState(5);
   const [quizz, setQuizz] = useState<Quizz | null>(null);
 
   useEffect(() => {
     setQuizz(new Quizz());
   }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setGameOver(true);
+      setTimer(5);
+    ;}
+    const interval = setInterval(() => {
+      setTimer(timer - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   function handleSubmit(key: string) {
     if (!quizz)
@@ -23,6 +35,7 @@ export default function QuizzView() {
       quizz.upScore();
       setScore(quizz.getScore());
       quizz.newLevel();
+      setTimer(5);
     } else {
       setGameOver(true);
       quizz.setGameOver(true);
@@ -34,6 +47,7 @@ export default function QuizzView() {
   return (
     <div className="flex items-center justify-center flex-col gap-y-2 text-white h-full">
       <h2>Score: {score}</h2>
+      <h3>{timer}</h3>
       <Image
         src={`/assets/${quizz.getActualFlag()}.svg`}
         alt="current flag"
@@ -62,6 +76,7 @@ export default function QuizzView() {
                 <Button onClick={() => {
                   setGameOver(false);
                   setScore(0);
+                  setTimer(5);
                   quizz.newGame();
                 }}>Restart</Button>
                 <Link href='/'>
