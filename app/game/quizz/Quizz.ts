@@ -17,6 +17,8 @@ export default class Quizz {
     private _actual_flag: string = "";
     private _solutions: Map<string, string>;
     private _seen_flags: Set<string>;
+    private _timer: number = 5;
+    private _gameOver: boolean = false;
 
     constructor() {
         this._score = 0;
@@ -46,6 +48,13 @@ export default class Quizz {
         this._seen_flags.add(this._actual_flag);
     }
 
+    public newGame() {
+        this._score = 0;
+        this._seen_flags.clear();
+        this._gameOver = false;
+        this.newLevel();
+    }
+
     private _setSolutions() {
         const random: number = Math.floor(Math.random() * 3);
         for (let i: number = 0; i < 4; i++) {
@@ -63,6 +72,8 @@ export default class Quizz {
     private _createRandomKey() : number {
         return Math.floor(Math.random() * 197);
     }
+
+    public setGameOver(gameOver: boolean) { this._gameOver = gameOver; }
 
     public getScore() { return this._score; } 
     public getActualFlag() { return this._actual_flag; }

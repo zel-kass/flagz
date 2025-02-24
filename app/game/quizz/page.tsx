@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react'
 import Quizz from "./Quizz";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from 'next/link';
 
 
 export default function QuizzView() {
+  const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [quizz, setQuizz] = useState<Quizz | null>(null);
 
@@ -15,10 +17,15 @@ export default function QuizzView() {
   }, []);
 
   function handleSubmit(key: string) {
-    if (quizz && key === quizz.getActualFlag()) {
+    if (!quizz)
+      throw new Error("Quizz is not initialized");
+    if (key === quizz.getActualFlag()) {
       quizz.upScore();
       setScore(quizz.getScore());
       quizz.newLevel();
+    } else {
+      setGameOver(true);
+      quizz.setGameOver(true);
     }
   }
 
@@ -45,6 +52,26 @@ export default function QuizzView() {
             </Button>
           ))}
       </div>
+      {gameOver && 
+        <div className='z-10 fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center'>
+          <div className='w-1/2 h-1/3 bg-white/80 rounded-lg backdrop-blur-md'>
+            <div className='flex flex-col gap-y-2 p-4 h-full justify-center items-center'>
+              <h2 className='text-3xl text-center'>Game Over</h2>
+              <h3 className='text-2xl text-center'>Score: {score}</h3>
+              <div className='flex flex-row items-center gap-x-2'>
+                <Button onClick={() => {
+                  setGameOver(false);
+                  setScore(0);
+                  quizz.newGame();
+                }}>Restart</Button>
+                <Link href='/'>
+                  <Button>Home</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 }
